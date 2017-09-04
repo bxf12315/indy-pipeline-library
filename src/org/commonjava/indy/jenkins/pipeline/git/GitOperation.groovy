@@ -6,15 +6,28 @@ void gitClone(String repoUrl){
 }
 
 void createTag(String tagName,String comment) {
-    sh ('git tag -a '+ $tagName + ' -m ' +$comment)
+    sh ("git tag -a  $tagName  -m $comment")
 }
 
-void pushTag(String tagName)
+void pushTag(String tagName,String remoteRepo)
 {
-    sh ('git push origin '+$tagName)
+    sh ("git push  $remoteRepo  $tagName")
 }
 
-String getBranch() {
+boolean gitCodePush(String commitMassage,String remtoRepo,String targetBranch){
+    sh ("git add . ")
+    sh ("git commit -m $commitMassage  ")
+    sh ("git push $remtoRepo $tagetBranch  ")
+    result = readFile('outFile').trim()
+    //error:
+    new File("outFile").eachLine {
+        if (line.matches("error:")){
+            return true
+        }
+    }
+}
+
+String getBranchName() {
     String branchName;
 
     // When Gitlab triggers the build, we can read the source branch from gitlab.
@@ -24,8 +37,11 @@ String getBranch() {
     } else {
         sh "git show-ref | grep `git rev-parse HEAD` | grep remotes | grep -v HEAD | sed -e 's/.*remotes.origin.//' > branch.txt"
         branchName = readFile('branch.txt').trim()
+
+
     }
 
     echo 'Building branch \'' + branchName + '\'.'
     return branchName;
 }
+
