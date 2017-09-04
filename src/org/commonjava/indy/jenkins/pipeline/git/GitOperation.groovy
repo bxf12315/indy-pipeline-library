@@ -15,15 +15,14 @@ void pushTag(String tagName,String remoteRepo)
 }
 
 boolean gitCodePush(String commitMassage,String remtoRepo,String targetBranch){
-    sh ("git add . ")
-    sh ("git commit -m $commitMassage  ")
-    sh ("git push $remtoRepo $tagetBranch  ")
-    result = readFile('outFile').trim()
-    //error:
-    new File("outFile").eachLine {
-        if (line.matches("error:")){
-            return true
-        }
+    def result
+    try {
+        sh("git add . ")
+        sh("git commit -m $commitMassage  ")
+        sh("git push $remtoRepo $tagetBranch  ")
+        result = true
+    } catch (err){
+        result = false
     }
 }
 

@@ -13,3 +13,4 @@ boolean updateVersion(String version,String commitMassage,String remtoRepo,Strin
     mavenOperation.updateApplicationVersionMaven(version)
     return gitOperation.gitCodePush(commitMassage,remtoRepo,targetBranch)
 }
+
