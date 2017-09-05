@@ -1,9 +1,21 @@
+import org.commonjava.indy.jenkins.pipeline.git.GitOperation
 
+class asf{
     static void main(String[] args) {
-        sh("git log >> outfile")
-        println("1111111111")
-        new File("outfile").eachLine {
-            line -> println ("line : $line")
-        }
+        String a = "Hello World";
+
+        println(a.matches("Hello"));
+        println(a.matches("Hello(.*)"));
+
+        def git = new GitOperation()
+        git.echo();
+
+        def abs = new asf()
+        abs.p()
     }
+
+    void p(){
+        println("---2---2---2----2-------")
+    }
+}
 

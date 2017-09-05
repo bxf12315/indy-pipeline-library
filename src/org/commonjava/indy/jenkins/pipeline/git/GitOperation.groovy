@@ -1,6 +1,5 @@
 package org.commonjava.indy.jenkins.pipeline.git
 
-
 void gitClone(String repoUrl){
     sh ('git clone '+ repoUrl )
 }
@@ -24,6 +23,7 @@ boolean gitCodePush(String commitMassage,String remtoRepo,String targetBranch){
     } catch (err){
         result = false
     }
+    return result
 }
 
 String getBranchName() {
